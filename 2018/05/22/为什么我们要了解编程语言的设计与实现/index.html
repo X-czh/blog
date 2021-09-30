@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="description" content="为什么我们要了解编程语言的设计与实现"/><meta name="keywords" content="programming_languages, Zhanghao's Blog" /><link rel="alternate" href="/blog/atom.xml" title="Zhanghao's Blog" type="application/atom+xml"><link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=2.11.0" />
+<link rel="canonical" href="https://x-czh.github.io/2018/05/22/为什么我们要了解编程语言的设计与实现/"/>
+
+<link rel="stylesheet" type="text/css" href="/blog/lib/fancybox/jquery.fancybox.css" /><script type="text/x-mathjax-config">
+    MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+  </script>
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<link rel="stylesheet" type="text/css" href="/blog/css/style.css?v=2.11.0" />
+
+<script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":"","latex":true};
+</script>
+
+    <title>为什么我们要了解编程语言的设计与实现 - Zhanghao's Blog</title>
+  <meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/blog/." class="logo">Zhanghao's Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list"><a href="/blog/">
+        <li class="mobile-menu-item">Home
+          </li>
+      </a><a href="/blog/archives/">
+        <li class="mobile-menu-item">Archives
+          </li>
+      </a><a href="/blog/tags/">
+        <li class="mobile-menu-item">Tags
+          </li>
+      </a><a href="/blog/categories/">
+        <li class="mobile-menu-item">Categories
+          </li>
+      </a><a href="/blog/../">
+        <li class="mobile-menu-item">About
+          </li>
+      </a></ul>
+</nav>
+<div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/blog/." class="logo">Zhanghao's Blog</a>
+</div>
+
+<nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
+          <a class="menu-item-link" href="/blog/">
+            Home
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/blog/archives/">
+            Archives
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/blog/tags/">
+            Tags
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/blog/categories/">
+            Categories
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/blog/../">
+            About
+            </a>
+        </li>
+      </ul></nav>
+</header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title">为什么我们要了解编程语言的设计与实现
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-05-22
+        </span><span class="post-category">
+            <a href="/blog/categories/Computer-Science/">Computer Science</a>
+            </span>
+        </div>
+    </header>
+
+    <div class="post-content"><p>更新 (2020/03/22)：</p>
+<p>时隔两年，学习了更多编程语言领域的知识之后，对本书的认识也有了一定的转变：覆盖面很广，一路从语言设计，编程范式讲解到编译器实现；不过正如标题“Pragmatics”所指，本书侧重在语用学，关注实际语言特性的分析、运用与实现，对语法学也有一定涉及，但是对语义学涉及甚少。不过对于非编程语言领域的程序员来说，语用学的知识正是最需要，收益最大的部分。</p>
+<span id="more"></span>
+
+<hr>
+<p>本来是想写一篇对Scott的Programming Language Pragmatics第三版的书评，发表在<a target="_blank" rel="noopener" href="https://book.douban.com/review/9385529/">豆瓣</a>上。写着写着夹杂了很多对于为什么要了解编程语言的设计与实现的一点想法，也好。</p>
+<hr>
+<p>这不是一本讲某种具体编程语言的书，看完也不会对你的编程能力有什么立竿见影的提效，但是这仍然是一本所有程序员都值得一看的书。</p>
+<p>编程语言不仅仅是程序员与电脑之间沟通的媒介，它同时也是程序员对真实世界问题建模的工具。不同的编程语言提供了不同的思考方式来解决真实世界问题，而这个世界的复杂性决定了我们往往需要不同的思维方式来解决不同类型的问题，这也是如此种类繁多的编程语言得以被开发和运用的原因。这意味着作为一名程序员，我们不仅仅需要具备快速学习和合理运用多种不同风格的编程语言的能力，还应具备在必要的时候开发专用的领域语言来解决特定问题的能力。</p>
+<p>这本书正提供了培养这两方面能力的必备知识。通过对一系列语言设计的核心要素（命名与作用域，控制流，类型，控制抽象，数据抽象与面向对象）的讨论，辅之以各种具体编程语言的实例，本书不仅从高视角揭示了编程语言运作的基本原理，同时也以低视角深入具体编程语言的种种设计选择背后的取舍。通过对各类编程范式（过程式，面向对象式，函数式，逻辑式，以及脚本语言和并发编程）的概览，本书阐明了各种范式在对问题建模时的不同思路和由此带来的语言特性上的差异与解决问题效率上的不同。由此，读者将加深对已经学会的编程语言的认识，并学习到合理选择不同的编程语言及和相应的语言特性来解决实际问题的能力，在需要学习一门新的语言时也能更快更从容地学习。除此之外，本书还提供了对语言实现细节（编译原理及运行时系统）的详细介绍，提供了开发专用的领域语言的必要知识之余也有助于从底层实现角度加深读者对语言特性的理解。</p>
+<p>纵然世间的编程语言种类繁杂，各具特点，然而其底层的设计原理是相通的。它们间的不同除了来自于设计者的能力限制之外，更多的来自于因设计目标的不同而导致的对问题的思考方式不同和在性能与语言表达能力间的取舍。而这本书正提供了对不同编程语言设计与实现上同与异的详细论述，进而帮助程序员们从一个更高的视角认识手中的工具，用好手中的工具，乃至开发一个新的工具来更好的解决问题。在近来编程语言逐渐变得多范式融合（Scala试图融合面向对象式和函数式，Java等主流语言纷纷引入函数式特性，语言的并发特性也得到不断重视）以更好地解决生产实际中的复杂问题的背景下，这样的能力显得愈发重要。</p>
+<p>当然，这本书只是在编程语言设计与实现上开了个头，更深入的对语言设计理论及编译原理的讨论还需要阅读其他更深入的教材。</p>
+<p>最后是一些关于阅读本书的建议：首先，最好在掌握一门高级编程语言（如Java），并对其他编程范式和操作系统基本原理有一定了解的基础上阅读本书。其次，由于本书的内容颇为繁杂，在阅读时可以有一定的取舍，比如可以先只关注语言设计的部分而适当忽略语言实现的部分。</p>
+
+      </div>
+      <div class="post-copyright">
+    <p class="copyright-item">
+      <span>Author: </span>
+      <a href="https://x-czh.github.io">陈张昊</a>
+    </p>
+    <p class="copyright-item">
+      <span>Link: </span>
+      <a href="https://x-czh.github.io/2018/05/22/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E4%BB%AC%E8%A6%81%E4%BA%86%E8%A7%A3%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/">https://x-czh.github.io/2018/05/22/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E4%BB%AC%E8%A6%81%E4%BA%86%E8%A7%A3%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/</a>
+    </p>
+    <p class="copyright-item">
+      <span>License: </span><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+      <footer class="post-footer">
+        <div class="post-tags">
+            <a href="/blog/tags/programming-languages/">programming_languages</a>
+            </div>
+        
+        <nav class="post-nav"><a class="prev" href="/blog/2018/08/21/CS140e-0/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">CS140e (0) 准备与Blinky</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    <a class="next" href="/blog/2016/09/30/%E5%85%B3%E4%BA%8E%E8%BD%AC%E4%B8%93%E4%B8%9A/">
+        <span class="next-text nav-default">关于转专业</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    </nav></footer>
+    </article></div><div class="comments" id="comments"><div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div></div>
+      </main>
+
+      <footer id="footer" class="footer"><div class="social-links"><a href="mailto:zhanghao.chen@outlook.com" class="iconfont icon-email" title="email"></a>
+        <a target="_blank" rel="noopener" href="https://www.linkedin.com/in/chenzhanghao/" class="iconfont icon-linkedin" title="linkedin"></a>
+        <a target="_blank" rel="noopener" href="https://github.com/X-czh" class="iconfont icon-github" title="github"></a>
+        <a target="_blank" rel="noopener" href="https://www.zhihu.com/people/chenzhanghao/" class="iconfont icon-zhihu" title="zhihu"></a>
+        <a target="_blank" rel="noopener" href="https://www.douban.com/people/chenzhanghao/" class="iconfont icon-douban" title="douban"></a>
+        <a href="/blog/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    </div><div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">&copy;2016 - 2021<span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">陈张昊</span>
+  </span>
+</div>
+</footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div><script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'https://x-czh.github.io/2018/05/22/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E4%BB%AC%E8%A6%81%E4%BA%86%E8%A7%A3%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/';
+        this.page.identifier = '2018/05/22/为什么我们要了解编程语言的设计与实现/';
+        this.page.title = '为什么我们要了解编程语言的设计与实现';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//chenzhanghao.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script><script type="text/javascript" src="/blog/lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/blog/lib/slideout/slideout.js"></script>
+  <script type="text/javascript" src="/blog/lib/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/blog/js/src/even.js?v=2.11.0"></script>
+</body>
+</html>
