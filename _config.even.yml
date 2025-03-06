@@ -77,11 +77,16 @@ social:
 leancloud:
   app_id:
   app_key:
+  server_url:
+  cdn:
 
 # Baidu Analytics
 baidu_analytics:
 # Baidu Verification
 baidu_verification:
+
+# Baidu push
+baidu_push:
 
 # Google Analytics
 google_analytics:
@@ -89,7 +94,7 @@ google_analytics:
 google_verification:
 
 # Disqus
-disqus_shortname: chenzhanghao
+disqus_shortname:
 
 #Changyan
 changyan:
@@ -128,4 +133,4 @@ utterances:
 # ===========================================
 # Version
 # ===========================================
-version: 2.11.0
+version: 3.0.0
